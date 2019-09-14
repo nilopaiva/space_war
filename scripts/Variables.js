@@ -15,6 +15,16 @@ class Variables{
     //Velocidade do inimigo
     enemySpeed = window.innerWidth / 400;
 
+    resizeWindow(){
+        this.smooth_value = 10;
+        this.shotSpeed = window.innerWidth / 100;
+        this.shotSize = window.innerWidth / 100;
+        this.enemySpeed = window.innerWidth / 400;
+        this.width();
+        this.height();
+        console.log('aaaa');
+    }
+
     /**
      * Define o nível da "suavidade" com que a nave vai até o mouse.
      * Quanto maior seu valor mais rápido a nave vai até o mouse 
@@ -76,3 +86,8 @@ class Variables{
 }
 
 let variables = new Variables();
+
+window.addEventListener('resize', (event)=>{
+    variables.resizeWindow();
+    
+  });
