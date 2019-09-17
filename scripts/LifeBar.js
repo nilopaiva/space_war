@@ -11,11 +11,11 @@ class LifeBar{
     update(){
         game.fillStyle = this.barColor;
         game.fillRect(10,10,this.barMaxWidth,10);
-        this.resizeBarMaxWidth();
+        this.resizeBarWidth();
     }
 
-    resizeBarMaxWidth(){
-        this.barMaxWidth = 0.25 * variables.width();
+    resizeBarWidth(){
+        this.barMaxWidth = 0.25 * variables.width() * player.lifeBar / 100;
     }
 }
 

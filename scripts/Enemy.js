@@ -4,14 +4,16 @@
  */
 class Enemy{
 
-    position_x = variables.width()+Math.round(Math.random()*60 + 24);
-    position_y = (Math.round(Math.random()*60 + 24) * variables.height()) / 100;
+    position_x = variables.width()+Math.floor(Math.random() * (variables.width()*2));
+    position_y = (Math.round(Math.random()*80 + 24) * variables.height()) / 100;
     speed      = variables.getEnemySpeed();
     shots      = [];
     color      = "#620dbd";
     alive      = true;
+    height     = variables.unityHeight()*3.6;
 
     constructor(){
+        console.log(this.position_x);
         game.fillRect(this.position_x, this.position_y-variables.unityHeight()*2, variables.unityWidth(), variables.unityHeight()*4);
 
         game.fillRect(
@@ -40,12 +42,12 @@ class Enemy{
      */
     update(){
         this.moving();
-        // Atualiza posição do tiro
-        if(this.shots.length > 0){
-            this.shots.forEach(shot => {
-                shot.update();
-            });
-        }
+        // Atualiza posição do tiro (quando o inimigo puder atirar)
+        // if(this.shots.length > 0){
+        //     this.shots.forEach(shot => {
+        //         shot.update();
+        //     });
+        // }
 
         // Atualiza posição da nave
 
@@ -68,6 +70,7 @@ class Enemy{
             variables.unityWidth(),
 
             variables.unityHeight()*1.5);   
+    
     }
 
     /**
@@ -92,11 +95,16 @@ class Enemy{
      */
     destroy(shot){
         shot.destroy();
-        this.position_x = -2000;
-        this.alive = false;
+        this.position_x = variables.width()+Math.floor(Math.random() * (variables.width()*2));
+        this.position_y = (Math.round(Math.random()*80 + 24) * variables.height()) / 100;
+        // this.position_x = -2000;
+        // this.alive = false;
+        player.points += 1;
+        console.log(player.points);
     }
 }
 
 let enemies = [];
-enemies.push(new Enemy());
-enemies.push(new Enemy());
+for(i=0;i<=10;i++){
+    enemies.push(new Enemy());
+}

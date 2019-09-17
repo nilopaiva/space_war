@@ -10,6 +10,13 @@ class Player{
     mouse_y    = 0;
     shots      = [];
     shoted     = false;
+    points     = 0;
+    lifeBar    = 100;
+    ammunitionBar = 100;
+    ammunitionStress = variables.getPlayerGunStress();
+    alive = true;
+    immunit = false;
+    immunitTime = 500;
 
     constructor(color){
         game.fillStyle = "#F22";
@@ -37,15 +44,24 @@ class Player{
 
         document.addEventListener("click", (e) => {
             if(e.button == 0){
-                this.shots.push(new Shot(this.position_x, this.position_y));
-                this.shoted = true;
+                this.shotFire();
             }
         })
 
         document.addEventListener("touchstart", (e) => {
+            this.shotFire();
+        })
+    }
+
+    /**
+     * Função chamada quando o jogador atira
+     */
+    shotFire(){
+        if(this.ammunitionBar > 0){
             this.shots.push(new Shot(this.position_x, this.position_y));
             this.shoted = true;
-        })
+            this.ammunitionBar -= this.ammunitionStress;
+        }
     }
 
     /**
@@ -70,12 +86,12 @@ class Player{
     }
 
     /**
-     * É chamado toda vez que o moving é chamado (a cada frame)
+     * Atualiza posição do player e seus tiros
      */
     update(){
         //Atualiza a posição da nave do jogador
         this.moving(); 
-
+        this.updateAmmunitionBar();
         // Atualiza posição do tiro
         if(this.shots.length > 0){
             this.shots.forEach(shot => {
@@ -93,7 +109,39 @@ class Player{
             variables.unityHeight()*1.5);   
     }
 
-    // Retorna os tiros do jogador
+    updateAmmunitionBar(){
+        if(this.ammunitionBar < 0.125 * variables.width()){
+            this.ammunitionBar+=1;
+        }
+    }
+
+       /**
+     * Checa se algo colidiu com o player
+     */
+    checkCollision(object){
+        // Verifica se houve colisão no eixo X
+        if(object.position_x <= this.position_x +variables.unityWidth()*3 && object.position_x >= this.position_x - variables.unityWidth()){
+            // Verifica se houve colisão no eixo Y
+            if(object.position_y + object.height >= this.position_y &&
+                object.position_y <= this.position_y + variables.unityHeight()*3.6){
+                this.destroy(object);
+            }
+        } 
+    }
+
+    immunitCout(){
+        this.lifeBar-= 10;
+        this.immunitTime -= 1;
+    }
+
+    destroy(object){
+        this.alive = false;
+        console.log("morto");
+    }
+
+    /**
+     * Retorna os tiros do jogador
+     */
     shots(){
         return this.shots;
     }

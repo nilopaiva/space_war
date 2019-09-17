@@ -1,7 +1,7 @@
 class AmmunitionBar{
     backgroundColor = "#474747";
     barColor = "#1d1bcc";
-    barMaxWidth = 0.125 * variables.width();
+    barMaxWidth = variables.getAmmunitionBarWidth();
 
     constructor(){
         game.fillStyle = this.barColor;
@@ -11,11 +11,11 @@ class AmmunitionBar{
     update(){
         game.fillStyle = this.barColor;
         game.fillRect(10,25,this.barMaxWidth,10);
-        this.resizeBarMaxWidth();
+        this.resizeBarWidth();
     }
 
-    resizeBarMaxWidth(){
-        this.barMaxWidth = 0.125 * variables.width();
+    resizeBarWidth(){
+        this.barMaxWidth = 0.125 * variables.width() * player.ammunitionBar / 100;
     }
 }
 

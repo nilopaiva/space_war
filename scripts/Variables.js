@@ -15,6 +15,11 @@ class Variables{
     //Velocidade do inimigo
     enemySpeed = window.innerWidth / 400;
 
+    ammunitionBarWidth = 0.125 * window.innerWidth;
+
+    //Stress da arma do jogador
+    playerGunStress = (0.125 * window.innerWidth) / 3;
+
     resizeWindow(){
         this.smooth_value = 10;
         this.shotSpeed = window.innerWidth / 100;
@@ -22,7 +27,6 @@ class Variables{
         this.enemySpeed = window.innerWidth / 400;
         this.width();
         this.height();
-        console.log('aaaa');
     }
 
     /**
@@ -47,6 +51,14 @@ class Variables{
      */
     getShotSpeed(){
         return this.shotSpeed;
+    }
+
+    getAmmunitionBarWidth(){
+        return this.ammunitionBarWidth;
+    }
+
+    getPlayerGunStress(){
+        return this.playerGunStress;
     }
 
     /**
@@ -89,5 +101,4 @@ let variables = new Variables();
 
 window.addEventListener('resize', (event)=>{
     variables.resizeWindow();
-    
-  });
+});
